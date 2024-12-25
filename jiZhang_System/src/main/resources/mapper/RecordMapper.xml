@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.jizhang.mapper.RecordMapper">
+    
+    <!-- 基础列 -->
+    <sql id="Base_Column_List">
+        r.id, r.type, r.amount, r.category_id, r.date, r.description, r.created_at, r.updated_at,
+        c.name as category_name, c.type as category_type
+    </sql>
+    
+    <!-- 分页查询记录 -->
+    <select id="selectPageWithCondition" resultType="com.example.jizhang.entity.Record">
+        SELECT 
+        <include refid="Base_Column_List"/>
+        FROM records r
+        LEFT JOIN categories c ON r.category_id = c.id
+        <where>
+            <if test="type != null and type != ''">
+                AND r.type = #{type}
+            </if>
+            <if test="categoryId != null">
+                AND r.category_id = #{categoryId}
+            </if>
+            <if test="startDate != null">
+                AND r.date >= #{startDate}
+            </if>
+            <if test="endDate != null">
+                AND r.date &lt;= #{endDate}
+            </if>
+        </where>
+        ORDER BY r.date DESC, r.created_at DESC
+    </select>
+    
+    <!-- 获取月度统计数据 -->
+    <select id="getMonthlyStatistics" resultType="java.util.Map">
+        SELECT 
+            COALESCE(SUM(CASE WHEN type = 'INCOME' THEN amount ELSE 0 END), 0) as monthlyIncome,
+            COALESCE(SUM(CASE WHEN type = 'EXPENSE' THEN amount ELSE 0 END), 0) as monthlyExpense
+        FROM records
+        WHERE date >= #{startDate}
+        AND date &lt; #{endDate}
+    </select>
+    
+    <!-- 按分类统计 -->
+    <select id="getCategoryStatistics" resultType="java.util.Map">
+        SELECT 
+            c.name as categoryName,
+            c.type as categoryType,
+            COUNT(*) as count,
+            COALESCE(SUM(r.amount), 0) as totalAmount
+        FROM records r
+        JOIN categories c ON r.category_id = c.id
+        WHERE r.date >= #{startDate}
+        AND r.date &lt; #{endDate}
+        GROUP BY c.id, c.name, c.type
+        ORDER BY totalAmount DESC
+    </select>
+</mapper> 

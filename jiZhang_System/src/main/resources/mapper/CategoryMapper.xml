@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.jizhang.mapper.CategoryMapper">
+    
+    <!-- 基础列 -->
+    <sql id="Base_Column_List">
+        id, name, type, description, is_enabled, is_system, created_at, updated_at
+    </sql>
+    
+    <!-- 根据类型查询分类列表 -->
+    <select id="selectByType" resultType="com.example.jizhang.entity.Category">
+        SELECT 
+        <include refid="Base_Column_List"/>
+        FROM categories
+        <where>
+            <if test="type != null and type != ''">
+                type = #{type}
+            </if>
+            <if test="enabled != null">
+                AND is_enabled = #{enabled}
+            </if>
+        </where>
+        ORDER BY created_at DESC
+    </select>
+    
+    <!-- 检查分类名称是否已存在 -->
+    <select id="checkNameExists" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM categories
+        WHERE name = #{name} 
+        AND type = #{type}
+        <if test="id != null">
+            AND id != #{id}
+        </if>
+    </select>
+    
+    <!-- 更新分类状态 -->
+    <update id="updateStatus">
+        UPDATE categories
+        SET 
+            is_enabled = #{isEnabled},
+            updated_at = NOW()
+        WHERE id = #{id}
+        AND is_system = FALSE
+    </update>
+    
+    <!-- 获取启用的分类列表 -->
+    <select id="getEnabledCategories" resultType="com.example.jizhang.entity.Category">
+        SELECT 
+        <include refid="Base_Column_List"/>
+        FROM categories
+        WHERE is_enabled = TRUE
+        <if test="type != null and type != ''">
+            AND type = #{type}
+        </if>
+        ORDER BY created_at DESC
+    </select>
+</mapper> 
