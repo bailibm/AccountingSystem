@@ -1,0 +1,186 @@
+/* 重置样式 */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* 全局样式 */
+
+body {
+    font-size: 16px;
+}
+
+
+/* 通用布局样式 */
+
+.app-container {
+    height: 100vh;
+}
+
+.aside {
+    background-color: #304156;
+    transition: width 0.3s;
+    overflow: hidden;
+    width: 260px !important;
+}
+
+.logo {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #2b3648;
+    gap: 12px;
+}
+
+.menu {
+    border: none;
+    font-size: 16px;
+}
+
+.header {
+    height: 64px !important;
+    background-color: #fff;
+    border-bottom: 1px solid #e6e6e6;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+    font-size: 16px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.toggle-icon {
+    font-size: 24px;
+    cursor: pointer;
+    color: #606266;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: #606266;
+    gap: 10px;
+    font-size: 16px;
+}
+
+.main {
+    background-color: #f0f2f5;
+    padding: 24px;
+    font-size: 16px;
+}
+
+
+/* 动画 */
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
+
+/* Element Plus 组件样式覆盖 */
+
+.el-card {
+    margin-bottom: 24px;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+}
+
+.el-table {
+    border-radius: 4px;
+    font-size: 15px;
+}
+
+.el-table th {
+    background-color: #f5f7fa !important;
+    font-size: 16px;
+    padding: 12px 0;
+}
+
+.el-button {
+    border-radius: 4px;
+    font-size: 15px;
+    padding: 10px 20px;
+}
+
+.el-menu-item {
+    height: 56px;
+    line-height: 56px;
+    font-size: 16px;
+}
+
+.el-menu-item [class^="el-icon"] {
+    margin-right: 12px;
+    font-size: 20px;
+}
+
+.el-dropdown-menu__item {
+    font-size: 15px;
+    padding: 10px 20px;
+}
+
+.el-form-item__label {
+    font-size: 16px;
+}
+
+.el-input__inner {
+    font-size: 15px;
+    height: 40px;
+}
+
+
+/* 表单样式 */
+
+.form-container {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+
+/* 卡片样式 */
+
+.stat-card {
+    padding: 20px;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+
+/* 金额显示样式 */
+
+.amount {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.amount.income {
+    color: #67C23A;
+}
+
+.amount.expense {
+    color: #F56C6C;
+}
